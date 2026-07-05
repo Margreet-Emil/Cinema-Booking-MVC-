@@ -1,0 +1,18 @@
+﻿@model CinemaBookingSystem.Models.Showtime
+
+@{
+    ViewData["Title"] = "Delete Showtime";
+}
+
+<h2>Delete Showtime</h2>
+
+<div class="alert alert-warning">
+    Are you sure you want to delete the showtime for "<strong>@Model.Movie?.Title</strong>"
+    at @Model.Hall?.Cinema?.Name (@Model.Hall?.Name) on @Model.StartTime.ToString("dd MMM yyyy, hh:mm tt")?
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

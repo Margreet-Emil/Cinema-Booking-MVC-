@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CinemaBookingSystem.Models.Hall>
+
+@{
+    ViewData["Title"] = "Manage Halls";
+}
+
+<h2>Manage Halls</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">+ Add New Hall</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Cinema</th>
+            <th>Seat Capacity</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hall in Model)
+        {
+            <tr>
+                <td>@hall.Name</td>
+                <td>@hall.Cinema?.Name</td>
+                <td>@hall.SeatCapacity</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@hall.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@hall.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">No halls yet.</p>
+}

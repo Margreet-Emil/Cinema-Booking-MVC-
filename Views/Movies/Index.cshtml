@@ -1,0 +1,38 @@
+﻿@model IEnumerable<CinemaBookingSystem.Models.Movie>
+
+@{
+    ViewData["Title"] = "Movies";
+}
+
+<h2>Now Showing</h2>
+
+<div class="row">
+    @foreach (var movie in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                @if (!string.IsNullOrEmpty(movie.PosterPath))
+                {
+                    <img src="@movie.PosterPath" class="card-img-top" alt="@movie.Title" style="height:300px; object-fit:cover;" />
+                }
+                else
+                {
+                    <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height:300px;">
+                        No Poster Available
+                    </div>
+                }
+                <div class="card-body">
+                    <h5 class="card-title">@movie.Title</h5>
+                    <p class="card-text text-muted">@movie.Category?.Name &bull; @movie.DurationMinutes min</p>
+                    <p class="card-text">@(movie.Description.Length > 100 ? movie.Description.Substring(0, 100) + "..." : movie.Description)</p>
+                    <a asp-action="Details" asp-route-id="@movie.Id" class="btn btn-primary">View Showtimes</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">No movies are currently showing.</p>
+}

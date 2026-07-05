@@ -1,0 +1,43 @@
+﻿@model IEnumerable<CinemaBookingSystem.Models.Showtime>
+
+@{
+    ViewData["Title"] = "Manage Showtimes";
+}
+
+<h2>Manage Showtimes</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">+ Add New Showtime</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Movie</th>
+            <th>Cinema / Hall</th>
+            <th>Date &amp; Time</th>
+            <th>Price</th>
+            <th>Available Seats</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var showtime in Model)
+        {
+            <tr>
+                <td>@showtime.Movie?.Title</td>
+                <td>@showtime.Hall?.Cinema?.Name / @showtime.Hall?.Name</td>
+                <td>@showtime.StartTime.ToString("dd MMM yyyy, hh:mm tt")</td>
+                <td>@showtime.TicketPrice.ToString("C")</td>
+                <td>@showtime.AvailableSeats</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@showtime.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@showtime.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">No showtimes yet.</p>
+}

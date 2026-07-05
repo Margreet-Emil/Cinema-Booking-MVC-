@@ -1,0 +1,40 @@
+﻿@model IEnumerable<CinemaBookingSystem.Models.Cinema>
+
+@{
+    ViewData["Title"] = "Manage Cinemas";
+}
+
+<h2>Manage Cinemas</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">+ Add New Cinema</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Halls</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cinema in Model)
+        {
+            <tr>
+                <td>@cinema.Name</td>
+                <td>@cinema.Address</td>
+                <td>@cinema.Halls.Count</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@cinema.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@cinema.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                    <a asp-controller="Halls" asp-action="Index" asp-route-cinemaId="@cinema.Id" class="btn btn-sm btn-outline-secondary">Manage Halls</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">No cinemas yet.</p>
+}

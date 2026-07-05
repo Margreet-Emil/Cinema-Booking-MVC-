@@ -1,0 +1,68 @@
+﻿@model CinemaBookingSystem.ViewModels.BookingCreateViewModel
+
+@{
+    ViewData["Title"] = "Book Tickets";
+}
+
+<h2>Book Tickets</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">@Model.MovieTitle</h5>
+                <p class="card-text">
+                    <strong>Cinema:</strong> @Model.CinemaName<br />
+                    <strong>Hall:</strong> @Model.HallName<br />
+                    <strong>Date &amp; Time:</strong> @Model.StartTime.ToString("dd MMM yyyy, hh:mm tt")<br />
+                    <strong>Price per seat:</strong> @Model.TicketPrice.ToString("C")<br />
+                    <strong>Available Seats:</strong> @Model.AvailableSeats
+                </p>
+            </div>
+        </div>
+
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="ShowtimeId" />
+            <input type="hidden" asp-for="MovieTitle" />
+            <input type="hidden" asp-for="CinemaName" />
+            <input type="hidden" asp-for="HallName" />
+            <input type="hidden" asp-for="StartTime" />
+            <input type="hidden" asp-for="TicketPrice" id="ticketPrice" />
+            <input type="hidden" asp-for="AvailableSeats" />
+
+            <div class="form-group mb-3">
+                <label asp-for="NumberOfSeats" class="control-label"></label>
+                <input asp-for="NumberOfSeats" id="numberOfSeats" class="form-control" min="1" max="@Model.AvailableSeats" />
+                <span asp-validation-for="NumberOfSeats" class="text-danger"></span>
+            </div>
+
+            <div class="alert alert-info">
+                <strong>Total Price: <span id="totalPrice">@Model.TotalPrice.ToString("C")</span></strong>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Confirm Booking</button>
+            <a asp-controller="Movies" asp-action="Details" asp-route-id="@Model.ShowtimeId" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        //update total price when number of seats changes
+        const seatsInput = document.getElementById("numberOfSeats");
+        const totalPriceEl = document.getElementById("totalPrice");
+        const pricePerSeat = parseFloat(document.getElementById("ticketPrice").value);
+
+        function updateTotal() {
+            const seats = parseInt(seatsInput.value) || 0;
+            const total = seats * pricePerSeat;
+            totalPriceEl.textContent = total.toLocaleString(undefined, { style: "currency", currency: "USD" });
+        }
+
+        seatsInput.addEventListener("input", updateTotal);
+    </script>
+}

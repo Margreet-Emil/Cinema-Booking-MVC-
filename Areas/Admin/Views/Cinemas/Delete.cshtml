@@ -1,0 +1,17 @@
+﻿@model CinemaBookingSystem.Models.Cinema
+
+@{
+    ViewData["Title"] = "Delete Cinema";
+}
+
+<h2>Delete Cinema</h2>
+
+<div class="alert alert-warning">
+    Are you sure you want to delete "<strong>@Model.Name</strong>" (@Model.Address)?
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

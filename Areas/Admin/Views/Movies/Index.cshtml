@@ -1,0 +1,51 @@
+﻿@model IEnumerable<CinemaBookingSystem.Models.Movie>
+
+@{
+    ViewData["Title"] = "Manage Movies";
+}
+
+<h2>Manage Movies</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">+ Add New Movie</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Poster</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Duration</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrEmpty(movie.PosterPath))
+                    {
+                        <img src="@movie.PosterPath" style="width:60px; height:80px; object-fit:cover;" />
+                    }
+                    else
+                    {
+                        <span class="text-muted">No poster</span>
+                    }
+                </td>
+                <td>@movie.Title</td>
+                <td>@movie.Category?.Name</td>
+                <td>@movie.DurationMinutes min</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@movie.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@movie.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                    <a asp-controller="Showtimes" asp-action="Index" asp-route-movieId="@movie.Id" class="btn btn-sm btn-outline-secondary">Showtimes</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">No movies yet.</p>
+}

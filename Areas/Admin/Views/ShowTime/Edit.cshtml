@@ -1,0 +1,50 @@
+﻿@model CinemaBookingSystem.Models.Showtime
+
+@{
+    ViewData["Title"] = "Edit Showtime";
+}
+
+<h2>Edit Showtime</h2>
+
+<form asp-action="Edit" method="post" class="col-md-6">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group mb-3">
+        <label asp-for="MovieId" class="control-label">Movie</label>
+        <select asp-for="MovieId" asp-items="ViewBag.Movies" class="form-control">
+            <option value="">-- Select Movie --</option>
+        </select>
+        <span asp-validation-for="MovieId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="HallId" class="control-label">Hall</label>
+        <select asp-for="HallId" asp-items="ViewBag.Halls" class="form-control">
+            <option value="">-- Select Hall --</option>
+        </select>
+        <span asp-validation-for="HallId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="StartTime" class="control-label"></label>
+        <input asp-for="StartTime" class="form-control" type="datetime-local" />
+        <span asp-validation-for="StartTime" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="TicketPrice" class="control-label"></label>
+        <input asp-for="TicketPrice" class="form-control" />
+        <span asp-validation-for="TicketPrice" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
